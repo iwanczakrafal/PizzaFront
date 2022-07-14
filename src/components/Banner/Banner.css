@@ -1,0 +1,40 @@
+.banner-container{
+    width:100vw;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+
+}
+.banner-image{
+    width: 100vw;
+    flex: 1;
+}
+.banner-image img{
+    height: 50%;
+
+}
+
+.banner-info{
+    margin-left: 70px;
+    flex: 1;
+    padding: 100px;
+    color: white;
+}
+
+.banner-info h1 {
+    font-size: 60px;
+}
+
+.banner-info p {
+    margin: 50px 0;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+.banner-info button{
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: transparent;
+    cursor: pointer;
+}
