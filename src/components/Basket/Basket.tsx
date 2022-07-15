@@ -48,7 +48,7 @@ export const Basket = () => {
                             <span className="basket-name">CORALZO</span>
                         </td>
                         <td>
-              <span className="basket-extras">
+              <span className="basket-addon">
                 Salami
               </span>
                         </td>

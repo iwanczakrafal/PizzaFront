@@ -78,3 +78,52 @@
     border-radius:50%;
 }
 
+@media  (max-width: 480px){
+    .basket-container{
+        flex-direction: column;
+        padding: 20px;
+    }
+    .basket-table{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .basket-trTitle{
+        display: none;
+    }
+    .basket-tr{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .basket-image{
+        width: 35vw;
+        height: 35vw;
+    }
+    .basket-remove-product{
+        padding-left: 250px;
+    }
+
+    .basket-name,.basket-price{
+        font-size: 24px;
+    }
+    .basket-addon{
+        font-size: 20px;
+    }
+    .basket-addon::before{
+        content: "Addon: "
+    }
+    .basket-price::before{
+        content: "Price: ";
+    }
+    .basket-clear{
+        margin-bottom: 30px;
+    }
+    .basket-wrapper{
+        width: 100%;
+    }
+}
+

@@ -65,3 +65,19 @@
     cursor: pointer;
     margin-right: 25px;
 }
+
+@media (max-width: 480px) {
+    .navbar-container {
+        padding: 0 20px;
+    }
+    .navbar-call {
+        display: none;
+    }
+    .navbar-center {
+        display: none;
+    }
+    .navbar-menuItem {
+        font-size: 12px;
+        margin-right: 10px;
+    }
+}

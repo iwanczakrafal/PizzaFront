@@ -5,7 +5,7 @@
     align-items: center;
 
 }
-.products-container p {
+.products-container-description {
     font-size: 24px;
     color: #444;
     width: 70%;
@@ -17,7 +17,6 @@
     justify-content: center;
     flex-wrap: wrap;
 }
-
 
 .product-container{
     width: 22%;
@@ -47,5 +46,28 @@
 .product-desc {
     text-align: center;
     color: #777;
+}
+
+@media (max-width: 480px) {
+    .products-container-title{
+        text-align: center;
+    }
+    .products-container-description{
+        width: 90%;
+        text-align: center;
+    }
+
+    .product-container {
+        width: 100%;
+    }
+
+    .product-title {
+        font-size: 30px;
+    }
+
+    .product-price,
+    .product-desc {
+        font-size: 24px;
+    }
 }
 
