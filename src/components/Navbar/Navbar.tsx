@@ -1,5 +1,6 @@
 import React from 'react';
 import {PhoneEnabled} from "@material-ui/icons";
+import {Link} from "react-router-dom";
 
 
 import "./Navbar.css";
@@ -20,12 +21,20 @@ export const Navbar = () => {
                     </div>
                 </div>
                 <div className="navbar-center">
-                    <h1 className="navbar-logo">BroPizza</h1>
+                   <Link to="/">
+                       <h1 className="navbar-logo">BroPizza</h1>
+                   </Link>
                 </div>
                 <div className="navbar-right">
+                    <Link to="/basket">
                     <div className="navbar-menuItem"><h4>BASKET</h4></div>
+                    </Link>
+                    <Link to="/register">
                     <div className="navbar-menuItem"><h4>REGISTER</h4></div>
+                    </Link>
+                    <Link to="/login">
                     <div className="navbar-menuItem"><h4>SIGN IN</h4></div>
+                    </Link>
                 </div>
 
         </div>

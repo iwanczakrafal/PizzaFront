@@ -1,15 +1,23 @@
 import React from 'react';
 import {HomeView} from "./views/HomeView";
 import {ProductView} from "./views/ProductView";
-
+import {Route, Routes} from "react-router-dom";
+import {BasketView} from './views/BasketView';
+import {LoginView} from "./views/LoginView";
+import {RegisterView} from "./views/RegisterView";
 
 
 export const App = () => {
 
     return (
         <>
-            <HomeView/>
-            {/*<ProductView/>*/}
+            <Routes>
+                <Route path="/" element={<HomeView/>}/>
+                <Route path="/product/:id" element={<ProductView/>}/>
+                <Route path="/basket" element={<BasketView/>}/>
+                <Route path="/login" element={<LoginView/>}/>
+                <Route path="/register" element={<RegisterView/>}/>
+            </Routes>
         </>
 
     );
