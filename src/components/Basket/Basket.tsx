@@ -1,14 +1,14 @@
 import {DeleteOutline} from "@material-ui/icons";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {SingleProduct} from "./SingleProduct";
-import {UserContext} from "../../contexts/user.context";
+
 
 import "./Basket.css";
 
 
 
 export const Basket = () => {
-const {user} = useContext(UserContext);
+
 const [products, setProducts] = useState([]);
 
     useEffect(() => {

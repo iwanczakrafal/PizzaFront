@@ -5,8 +5,10 @@ import {ProductItemInterface} from 'types';
 import "./SingleProduct.css";
 
 export const SingleProduct = () => {
+    // @TODO: TUTAJ OGARNAC DALEJ
+    const user = JSON.parse(localStorage.getItem('user') as string)
     const location = useLocation();
-    const id = location.pathname.split("/")[2];
+    const id = location.pathname.split("/")[user ? 3:2];
 
     const [product, setProduct] = useState<ProductItemInterface>({
         id: '',
@@ -62,7 +64,7 @@ export const SingleProduct = () => {
     useEffect(() => {
         (async () => {
             try {
-                const res = await fetch(`http://localhost:3001/product/${id}`);
+                const res = await fetch(user?`http://localhost:3001/product/special/${id}`:`http://localhost:3001/product/${id}`);
                 const resOptions = await fetch("http://localhost:3001/option");
                 const resPhoto = await fetch(`http://localhost:3001/product/photo/${id}`);
 

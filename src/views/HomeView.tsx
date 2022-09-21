@@ -1,24 +1,24 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {Navbar} from "../components/Navbar/Navbar";
 import {Slider} from "../components/Slider/Slider";
 import {ProductsList} from "../components/Products/ProductsList";
 import {Footer} from "../components/Footer/Footer";
 import {ProductItemInterface} from "types";
+import {useFetch} from "../utils/hooks/useFetch";
+import {RootState} from "../redux/store";
+import {useSelector} from "react-redux";
+
+
+
 
 
 export const HomeView = () => {
+    const user = useSelector((state: RootState) => state.user);
+    const [data,status] = useFetch(user.ok ?'http://localhost:3001/product/special':'http://localhost:3001/product')
 
-    const [products,setProducts] = useState<ProductItemInterface[]>([])
-    useEffect(() => {
-        (async () => {
-            try {
-                const res = await fetch(`http://localhost:3001/product`)
-                const data = await res.json();
-                setProducts(data);
-            } catch (err) {
-            }
-        })();
-    }, []);
+
+    // @ts-ignore
+    const dataToMap: ProductItemInterface[] = status === 'fetched' ? [...data] : null;
 
 
     return (
@@ -26,7 +26,9 @@ export const HomeView = () => {
 
             <Navbar/>
             <Slider/>
-            <ProductsList products={products}/>
+            {
+                status === 'fetched' && <ProductsList products={dataToMap}/>
+            }
             <Footer/>
         </>
     )

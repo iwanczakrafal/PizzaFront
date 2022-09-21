@@ -1,37 +1,24 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {PhoneEnabled} from "@material-ui/icons";
-import {Link} from "react-router-dom";
-
+import {Link, useNavigate} from "react-router-dom";
+import {useFetch} from "../../utils/hooks/useFetch";
 
 import "./Navbar.css";
+import {useSelector} from "react-redux";
+import {RootState} from "../../redux/store";
 
 
 export const Navbar = () => {
-    const [showUserContent, setShowUserContent] = useState(false);
-    const [showAdminContent, setShowAdminContent] = useState(false);
-    const [currentUser, setCurrentUser] = useState(undefined);
-    useEffect(() => {
 
-        const user = JSON.parse(localStorage.getItem('user') as string)
-        if (user) {
-            setCurrentUser(user);
-            setShowUserContent(user.roles.includes("ROLE_USER"));
-            setShowAdminContent(user.roles.includes("ROLE_ADMIN"));
-        }
-        // EventBus.on("logout", () => {
-        //     logOut();
-        // });
-        // return () => {
-        //     EventBus.remove("logout");
-        // };
 
-    }, []);
-    const logOut = async () => {
-        localStorage.removeItem('user');
-        await fetch("http://localhost:3001/auth/logout")
-        setShowUserContent(false);
-        setShowAdminContent(false);
-        setCurrentUser(undefined);
+    const [data,status,fetchData] = useFetch();
+    const navigate = useNavigate();
+    const user = useSelector((state: RootState) => state.user);
+
+    const logOut = () => {
+        fetchData("http://localhost:3001/auth/logout");
+        navigate('/', {replace: true})
+        window.location.reload()
     };
     return (
         <div className="navbar-container">
@@ -51,17 +38,25 @@ export const Navbar = () => {
                    </Link>
                 </div>
                 <div className="navbar-right">
-                    <Link to="/basket">
-                    <div className="navbar-menuItem"><h4>BASKET</h4></div>
-                    </Link>
-                    <Link to="/register">
-                    <div className="navbar-menuItem"><h4>REGISTER</h4></div>
-                    </Link>
-                    {currentUser
-                        ?<Link to="/"><div className="navbar-menuItem" onClick={logOut}>SIGN OUT</div></Link>
-                        : <Link to="/login">
-                    <div className="navbar-menuItem"><h4>SIGN IN</h4></div>
-                    </Link>
+                    {
+                        user.isAdmin
+                            ? <Link to="/dashboard"><div className="navbar-menuItem"><h4>DASHBOARD</h4></div></Link>
+                            :null
+                    }
+                    {
+                        user.ok
+                        ? <Link to="/basket"><div className="navbar-menuItem"><h4>BASKET</h4></div></Link>
+                        : null
+                    }
+                    {
+                        !user.ok
+                        ? <Link to="/register"><div className="navbar-menuItem"><h4>REGISTER</h4></div></Link>
+                        : null
+                    }
+                    {
+                        user.ok
+                        ?<Link to="/"><div className="navbar-menuItem" onClick={logOut}><h4>SIGN OUT</h4></div></Link>
+                        : <Link to="/login"><div className="navbar-menuItem"><h4>SIGN IN</h4></div></Link>
                     }
                 </div>
 

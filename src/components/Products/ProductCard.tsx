@@ -8,6 +8,7 @@ interface Props {
 }
 
 export const ProductCard = (props: Props) => {
+    const user = JSON.parse(localStorage.getItem('user') as string)
     const product = props.product;
     const [photo,setPhoto] = useState<string>('');
     (async() => {
@@ -16,7 +17,7 @@ export const ProductCard = (props: Props) => {
     })()
     return (
 
-        <Link className="product-container" to={`/product/${product.id}`}>
+        <Link className="product-container" to={product.isSpecial ?`/product/special/${product.id}`:`/product/${product.id}`}>
             <img src={photo} alt=""/>
             <h1 className="product-title">{product.name}</h1>
             <span className="product-price">$ {product.price}</span>
