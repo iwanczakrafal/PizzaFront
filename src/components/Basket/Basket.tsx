@@ -1,6 +1,6 @@
 import {DeleteOutline} from "@material-ui/icons";
 import React, {useEffect, useState} from "react";
-import {SingleProduct} from "./SingleProduct";
+// import {SingleBasketProduct} from "./SingleBasketProduct";
 
 
 import "./Basket.css";
@@ -35,7 +35,7 @@ const [products, setProducts] = useState([]);
                         <th>Extras</th>
                         <th>Price</th>
                     </tr>
-                    {/*{products.map(product => <SingleProduct/>)}*/}
+                    {/*{products.map(product => <SingleBasketProduct/>)}*/}
                 </table>
                     <button className="basket-clear"><DeleteOutline/></button>
             </div>

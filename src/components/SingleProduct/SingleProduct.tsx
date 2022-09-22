@@ -1,14 +1,24 @@
-import React, {useEffect, useState} from 'react';
+import React, {FormEvent, useEffect, useState} from 'react';
 import {useLocation} from "react-router-dom";
 import {ProductItemInterface} from 'types';
+import {useSelector} from "react-redux";
+import {RootState} from "../../redux/store";
+import {HttpMethod, useFetch} from "../../utils/hooks/useFetch";
 
 import "./SingleProduct.css";
 
 export const SingleProduct = () => {
-    // @TODO: TUTAJ OGARNAC DALEJ
-    const user = JSON.parse(localStorage.getItem('user') as string)
+
+    const user = useSelector((state: RootState) => state.user);
     const location = useLocation();
-    const id = location.pathname.split("/")[user ? 3:2];
+    const id = location.pathname.split("/")[2];
+    const specialId = location.pathname.split("/")[3];
+
+    const [data,status,fetchData] = useFetch()
+    const [optionsFetch,optionStatus] = useFetch("http://localhost:3001/option")
+    const [productFetch,productStatus] = useFetch(specialId ? `http://localhost:3001/product/special/${specialId}`:`http://localhost:3001/product/${id}`)
+
+
 
     const [product, setProduct] = useState<ProductItemInterface>({
         id: '',
@@ -22,10 +32,11 @@ export const SingleProduct = () => {
         name: '',
         price: 0
     }])
-    const [photo, setPhoto] = useState<string>('');
+
+    const [photo, setPhoto] = useState(`http://localhost:3001/product/photo/${specialId ? specialId : id}`);
 
     const [addForm, setAddForm] = useState({
-        productId: id,
+        productId: specialId ? specialId : id,
         count: 1,
         optionId: ''
     });
@@ -39,48 +50,37 @@ export const SingleProduct = () => {
 
     }
 
-    const addProductToBasket = () =>{
-        (async () => {
-            try {
-                const res = await fetch("http://localhost:3001/basket", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        addForm
-                    }),
-                });
+    const addProductToBasket = (e: FormEvent) =>{
+        e.preventDefault();
+        if(addForm.productId !== ''){
+            fetchData('http://localhost:3001/basket',{
+                method: HttpMethod.POST,
+                headers: {
+                    'content-type': 'application/json;charset=UTF-8'},
+                body: {
+                    productId: addForm.productId,
+                    count: addForm.count,
+                    optionId: addForm.optionId
+                }
+            })
+            return;
+        };
 
-                const data = await res.json();
 
-
-
-            } catch (err) {
-            }
-        })();
     }
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const res = await fetch(user?`http://localhost:3001/product/special/${id}`:`http://localhost:3001/product/${id}`);
-                const resOptions = await fetch("http://localhost:3001/option");
-                const resPhoto = await fetch(`http://localhost:3001/product/photo/${id}`);
+    useEffect(()=>{
 
-                const data = await res.json();
-                const dataOptions = await resOptions.json();
+        if( optionStatus && productStatus === 'fetched'){
+            setOptions(optionsFetch!)
+            setProduct(productFetch!)
 
-                setProduct(data);
-                setPhoto(resPhoto.url)
-                setOptions(dataOptions)
-            } catch (err) {
-            }
-        })();
-    }, [id]);
+        }
+    },[optionsFetch,productFetch])
 
 
     return (
+
         <div className="singleProduct-container">
             <div className="singleProduct-left">
                 <div className="singleProduct-image">
@@ -93,14 +93,17 @@ export const SingleProduct = () => {
                 <p className="singleProduct-description">{product.description}</p>
                 <h3 className="singleProduct-choose-addon">Choose additional ingredient</h3>
                 <div className="singleProduct-addons">
-                    <select name="options" defaultValue="" id="" onChange={e => updateAddForm(e.target.value)}>
-                        <option value="" selected>None</option>
-                        {options.map(option => <option key={option.id} value={option.id} >{option.name}: ${option.price}</option>)}
+                    <select name="options" defaultValue="" onChange={e => updateAddForm(e.target.value)}>
+                         {/*selected przy none*/}
+                        <option value="">None</option>
+                        {
+                            options.map(option => <option key={option.id} value={option.id} >{option.name}: ${option.price}</option>)
+                        }
                     </select>
                 </div>
                 <div className="singleProduct-add">
                     <h3>Total price: <span className="singleProduct-price">${product.price}</span></h3>
-                    <button>Add to Basket</button>
+                    <button onClick={addProductToBasket}>Add to Basket</button>
                 </div>
             </div>
         </div>

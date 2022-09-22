@@ -21,7 +21,6 @@ export const LoginForm = () => {
 
     useEffect(()=>{
         if(data !== undefined && data){
-            localStorage.setItem('user', JSON.stringify(data));
             const {ok,isAdmin,accessToken} = data
             dispatch(setUser({
              ok,

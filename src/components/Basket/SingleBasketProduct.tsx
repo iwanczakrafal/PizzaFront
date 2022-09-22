@@ -7,12 +7,12 @@ interface Props{
 
 
 
-export const SingleProduct = (props: Props) => {
+export const SingleBasketProduct = (props: Props) => {
 
         const product = props.item
     const [photo,setPhoto] = useState<string>('');
     (async() => {
-        // const res = await fetch(`http://localhost:3001/product/photo/${product.productId.id}`)
+        // const res = await fetch(`http://localhost:3001/product/photo/${product.id}`)
         // setPhoto(res.url)
     })()
     return(

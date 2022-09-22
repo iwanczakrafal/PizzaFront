@@ -17,8 +17,7 @@ export const HomeView = () => {
     const [data,status] = useFetch(user.ok ?'http://localhost:3001/product/special':'http://localhost:3001/product')
 
 
-    // @ts-ignore
-    const dataToMap: ProductItemInterface[] = status === 'fetched' ? [...data] : null;
+    const dataToMap = status === 'fetched' ? data : null;
 
 
     return (
@@ -27,7 +26,8 @@ export const HomeView = () => {
             <Navbar/>
             <Slider/>
             {
-                status === 'fetched' && <ProductsList products={dataToMap}/>
+                status === 'fetched' ? <ProductsList products={dataToMap as ProductItemInterface[] | null}/>
+                    : null
             }
             <Footer/>
         </>
