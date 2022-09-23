@@ -1,9 +1,10 @@
-import React, {FormEvent, useEffect, useState} from 'react';
+import React, {FormEvent, useEffect, useLayoutEffect, useState} from 'react';
 import {useLocation} from "react-router-dom";
 import {ProductItemInterface} from 'types';
 import {useSelector} from "react-redux";
 import {RootState} from "../../redux/store";
 import {HttpMethod, useFetch} from "../../utils/hooks/useFetch";
+import {CustomError} from "../CustomError/CustomError";
 
 import "./SingleProduct.css";
 
@@ -16,8 +17,11 @@ export const SingleProduct = () => {
 
     const [data,status,fetchData] = useFetch()
     const [optionsFetch,optionStatus] = useFetch("http://localhost:3001/option")
-    const [productFetch,productStatus] = useFetch(specialId ? `http://localhost:3001/product/special/${specialId}`:`http://localhost:3001/product/${id}`)
+    const [productFetch,productStatus] = useFetch(user.ok && specialId ? `http://localhost:3001/product/special/${specialId}`:`http://localhost:3001/product/${id}`)
 
+    useLayoutEffect(() => {
+        window.scrollTo(0, 0)
+    });
 
 
     const [product, setProduct] = useState<ProductItemInterface>({
@@ -33,7 +37,7 @@ export const SingleProduct = () => {
         price: 0
     }])
 
-    const [photo, setPhoto] = useState(`http://localhost:3001/product/photo/${specialId ? specialId : id}`);
+    const [photo, setPhoto] = useState(`http://localhost:3001/product/photo/${user.ok && specialId ? specialId : id}`);
 
     const [addForm, setAddForm] = useState({
         productId: specialId ? specialId : id,
@@ -78,8 +82,13 @@ export const SingleProduct = () => {
         }
     },[optionsFetch,productFetch])
 
-
     return (
+        (!user.ok && specialId) || !product
+
+        ?
+            <CustomError message='Not found product'></CustomError>
+
+        :
 
         <div className="singleProduct-container">
             <div className="singleProduct-left">
@@ -93,8 +102,7 @@ export const SingleProduct = () => {
                 <p className="singleProduct-description">{product.description}</p>
                 <h3 className="singleProduct-choose-addon">Choose additional ingredient</h3>
                 <div className="singleProduct-addons">
-                    <select name="options" defaultValue="" onChange={e => updateAddForm(e.target.value)}>
-                         {/*selected przy none*/}
+                    <select name="options" onChange={e => updateAddForm(e.target.value)}>
                         <option value="">None</option>
                         {
                             options.map(option => <option key={option.id} value={option.id} >{option.name}: ${option.price}</option>)
