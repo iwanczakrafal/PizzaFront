@@ -1,19 +1,38 @@
-import React, {FormEvent, useContext, useState} from "react";
-import {UserContext} from "../../contexts/user.context";
+import React, {FormEvent, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 import "./LoginForm.css";
+import {useDispatch, useSelector} from "react-redux";
+import { RootState } from "src/redux/store";
+import {setUser} from "../../redux/slice/user";
+import {HttpMethod, useFetch} from "../../utils/hooks/useFetch";
 
 
 export const LoginForm = () => {
 
-    const{user, setUser} = useContext(UserContext)
+    const { ok, isAdmin, accessToken } = useSelector((state: RootState) => state.user);
+    const dispatch = useDispatch();
+    const [data,status,fetchData] = useFetch()
     const navigate = useNavigate();
-
     const [form, setForm] = useState({
         email: '',
         password: '',
     });
+
+    useEffect(()=>{
+        if(data !== undefined && data){
+            const {ok,isAdmin,accessToken} = data
+            dispatch(setUser({
+             ok,
+                isAdmin,
+                accessToken
+            }))
+            navigate('/', {replace: true})
+
+        }
+    },[data])
+
+
     const updateForm = (key: string, value: any) => {
         setForm({
             ...form,
@@ -22,21 +41,21 @@ export const LoginForm = () => {
 
     }
 
-    const login = async (e:FormEvent) => {
+    const login = (e:FormEvent) => {
         e.preventDefault();
-            const res = await fetch("http://localhost:3001/auth/login", {
-                method: "POST",
+        if(form.email !== '' && form.password !== ''){
+            fetchData(`http://localhost:3001/auth/login`,{
+                method: HttpMethod.POST,
                 headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(form),
-
-            });
-
-            const data = await res.json();
-            localStorage.setItem('user', JSON.stringify(data));
-            setUser(JSON.parse(localStorage.getItem('user') as string))
-            navigate('/')
+                    'content-type': 'application/json;charset=UTF-8'},
+                body: {
+                    email: form.email,
+                    password: form.password,
+                }
+            })
+            return;
+        };
+        return alert('Nie możesz zostawić pustego pola')
     };
 
 
@@ -67,7 +86,7 @@ export const LoginForm = () => {
                     </label>
                     <a href="/">Forgotten your password?</a>
                         <button className="LoginForm-btn">LOGIN</button>
-                    <a href="/">Create account</a>
+                    <a href="/register">Create account</a>
                 </form>
             </div>
         </div>
