@@ -1,4 +1,4 @@
-import React, {FormEvent, useContext, useEffect, useState} from "react";
+import React, {FormEvent, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 import "./LoginForm.css";
@@ -86,7 +86,7 @@ export const LoginForm = () => {
                     </label>
                     <a href="/">Forgotten your password?</a>
                         <button className="LoginForm-btn">LOGIN</button>
-                    <a href="/">Create account</a>
+                    <a href="/register">Create account</a>
                 </form>
             </div>
         </div>

@@ -2,10 +2,9 @@ import React from 'react';
 import {PhoneEnabled} from "@material-ui/icons";
 import {Link, useNavigate} from "react-router-dom";
 import {useFetch} from "../../utils/hooks/useFetch";
+import {useCookies} from "react-cookie";
 
 import "./Navbar.css";
-import {useSelector} from "react-redux";
-import {RootState} from "../../redux/store";
 
 
 export const Navbar = () => {
@@ -13,13 +12,15 @@ export const Navbar = () => {
 
     const [data,status,fetchData] = useFetch();
     const navigate = useNavigate();
-    const user = useSelector((state: RootState) => state.user);
 
-    const logOut = () => {
+    const [cookie, setCookie] = useCookies(['access']);
+
+    const logOut = async() => {
         fetchData("http://localhost:3001/auth/logout");
         navigate('/', {replace: true})
-        window.location.reload()
+        return;
     };
+
     return (
         <div className="navbar-container">
 
@@ -39,22 +40,22 @@ export const Navbar = () => {
                 </div>
                 <div className="navbar-right">
                     {
-                        user.isAdmin
+                        cookie.access && cookie.access.isAdmin
                             ? <Link to="/dashboard"><div className="navbar-menuItem"><h4>DASHBOARD</h4></div></Link>
                             :null
                     }
                     {
-                        user.ok
+                        cookie.access && cookie.access.user
                         ? <Link to="/basket"><div className="navbar-menuItem"><h4>BASKET</h4></div></Link>
                         : null
                     }
                     {
-                        !user.ok
+                        !cookie.access
                         ? <Link to="/register"><div className="navbar-menuItem"><h4>REGISTER</h4></div></Link>
                         : null
                     }
                     {
-                        user.ok
+                        cookie.access && cookie.access.user
                         ?<Link to="/"><div className="navbar-menuItem" onClick={logOut}><h4>SIGN OUT</h4></div></Link>
                         : <Link to="/login"><div className="navbar-menuItem"><h4>SIGN IN</h4></div></Link>
                     }

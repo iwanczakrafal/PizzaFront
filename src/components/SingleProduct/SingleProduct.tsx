@@ -1,23 +1,23 @@
-import React, {FormEvent, useEffect, useLayoutEffect, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import {useLocation} from "react-router-dom";
 import {ProductItemInterface} from 'types';
-import {useSelector} from "react-redux";
-import {RootState} from "../../redux/store";
 import {HttpMethod, useFetch} from "../../utils/hooks/useFetch";
 import {CustomError} from "../CustomError/CustomError";
+import {useCookies} from "react-cookie";
+
 
 import "./SingleProduct.css";
 
 export const SingleProduct = () => {
 
-    const user = useSelector((state: RootState) => state.user);
+    const [cookie, setCookie] = useCookies(['access']);
     const location = useLocation();
     const id = location.pathname.split("/")[2];
     const specialId = location.pathname.split("/")[3];
 
     const [data,status,fetchData] = useFetch()
     const [optionsFetch,optionStatus] = useFetch("http://localhost:3001/option")
-    const [productFetch,productStatus] = useFetch(user.ok && specialId ? `http://localhost:3001/product/special/${specialId}`:`http://localhost:3001/product/${id}`)
+    const [productFetch,productStatus] = useFetch(cookie.access.user && specialId ? `http://localhost:3001/product/special/${specialId}`:`http://localhost:3001/product/${id}`)
 
     useLayoutEffect(() => {
         window.scrollTo(0, 0)
@@ -37,7 +37,9 @@ export const SingleProduct = () => {
         price: 0
     }])
 
-    const [photo, setPhoto] = useState(`http://localhost:3001/product/photo/${user.ok && specialId ? specialId : id}`);
+    const [price, setPrice] = useState(0)
+
+    const [photo, setPhoto] = useState(`http://localhost:3001/product/photo/${cookie.access.user && specialId ? specialId : id}`);
 
     const [addForm, setAddForm] = useState({
         productId: specialId ? specialId : id,
@@ -51,11 +53,11 @@ export const SingleProduct = () => {
             ...addForm,
             optionId: value
         })
-
+        const optionPrice = options.find(el => el.id === value)
+        setPrice(optionPrice ? product.price + optionPrice!.price : product.price)
     }
 
-    const addProductToBasket = (e: FormEvent) =>{
-        e.preventDefault();
+    const addProductToBasket = () =>{
         if(addForm.productId !== ''){
             fetchData('http://localhost:3001/basket',{
                 method: HttpMethod.POST,
@@ -67,23 +69,21 @@ export const SingleProduct = () => {
                     optionId: addForm.optionId
                 }
             })
+            window.location.reload();
             return;
-        };
-
-
+        }
     }
 
     useEffect(()=>{
-
         if( optionStatus && productStatus === 'fetched'){
             setOptions(optionsFetch!)
             setProduct(productFetch!)
-
+            setPrice(product.price)
         }
     },[optionsFetch,productFetch])
 
     return (
-        (!user.ok && specialId) || !product
+        (!cookie.access.user && specialId) || !product
 
         ?
             <CustomError message='Not found product'></CustomError>
@@ -110,7 +110,7 @@ export const SingleProduct = () => {
                     </select>
                 </div>
                 <div className="singleProduct-add">
-                    <h3>Total price: <span className="singleProduct-price">${product.price}</span></h3>
+                    <h3>Total price: <span className="singleProduct-price">${price}</span></h3>
                     <button onClick={addProductToBasket}>Add to Basket</button>
                 </div>
             </div>
