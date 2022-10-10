@@ -20,10 +20,10 @@ const initOptions = {
 
 
 export const useFetch = (url = '', value = initOptions) => {
-    const cache = useRef<any>({}); // pamieć podręczna żeby nie pobierać dwa razy tego samego
-    const [address, setAddress] = useState<string>(url); // adress https
-    const [status, setStatus] = useState<string>('idle'); // status określa co się dzieje czy dane sa pobierane/pobrane
-    const [form, setForm] = useState(value); // formularz  z metodan nagłowkami i danymi do wysłania na backend
+    const cache = useRef<any>({});
+    const [address, setAddress] = useState<string>(url);
+    const [status, setStatus] = useState<string>('idle');
+    const [form, setForm] = useState(value);
     const [data, setData] = useState();
     const fetchData = (url: string, value = initOptions) => {
         setAddress(url);
@@ -48,7 +48,7 @@ export const useFetch = (url = '', value = initOptions) => {
                         (form.method === HttpMethod.GET || form.method === HttpMethod.DELETE) ? null : JSON.stringify(form.body),
                 });
                 const data = await response.json();
-                cache.current[address] = data; // set response in cache;
+                cache.current[address] = data;
                 setData(data);
                 setStatus('fetched');
             }

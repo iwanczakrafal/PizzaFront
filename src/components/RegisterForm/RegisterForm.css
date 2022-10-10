@@ -1,6 +1,6 @@
 .registerForm-container {
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 100px);
     background-color: rgb(242, 242, 242);
     display: flex;
     align-items: center;

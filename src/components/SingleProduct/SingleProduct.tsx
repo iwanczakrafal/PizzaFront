@@ -15,9 +15,9 @@ export const SingleProduct = () => {
     const id = location.pathname.split("/")[2];
     const specialId = location.pathname.split("/")[3];
 
-    const [data,status,fetchData] = useFetch()
-    const [optionsFetch,optionStatus] = useFetch("http://localhost:3001/option")
-    const [productFetch,productStatus] = useFetch(cookie.access.user && specialId ? `http://localhost:3001/product/special/${specialId}`:`http://localhost:3001/product/${id}`)
+    const [data, status, fetchData] = useFetch()
+    const [optionsFetch, optionStatus] = useFetch("http://localhost:3001/option")
+    const [productFetch, productStatus] = useFetch((cookie.access && cookie.access.user) && specialId ? `http://localhost:3001/product/special/${specialId}` : `http://localhost:3001/product/${id}`)
 
     useLayoutEffect(() => {
         window.scrollTo(0, 0)
@@ -39,7 +39,7 @@ export const SingleProduct = () => {
 
     const [price, setPrice] = useState(0)
 
-    const [photo, setPhoto] = useState(`http://localhost:3001/product/photo/${cookie.access.user && specialId ? specialId : id}`);
+    const [photo, setPhoto] = useState(`http://localhost:3001/product/photo/${(cookie.access && cookie.access.user) && specialId ? specialId : id}`);
 
     const [addForm, setAddForm] = useState({
         productId: specialId ? specialId : id,
@@ -57,12 +57,13 @@ export const SingleProduct = () => {
         setPrice(optionPrice ? product.price + optionPrice!.price : product.price)
     }
 
-    const addProductToBasket = () =>{
-        if(addForm.productId !== ''){
-            fetchData('http://localhost:3001/basket',{
+    const addProductToBasket = () => {
+        if (addForm.productId !== '') {
+            fetchData('http://localhost:3001/basket', {
                 method: HttpMethod.POST,
                 headers: {
-                    'content-type': 'application/json;charset=UTF-8'},
+                    'content-type': 'application/json;charset=UTF-8'
+                },
                 body: {
                     productId: addForm.productId,
                     count: addForm.count,
@@ -74,47 +75,51 @@ export const SingleProduct = () => {
         }
     }
 
-    useEffect(()=>{
-        if( optionStatus && productStatus === 'fetched'){
+    useEffect(() => {
+        if (optionStatus && productStatus === 'fetched') {
             setOptions(optionsFetch!)
             setProduct(productFetch!)
             setPrice(product.price)
         }
-    },[optionsFetch,productFetch])
+    }, [optionsFetch, productFetch])
 
     return (
-        (!cookie.access.user && specialId) || !product
+        (!(cookie.access && cookie.access.user) && specialId) || !product
 
-        ?
+            ?
             <CustomError message='Not found product'></CustomError>
 
-        :
+            :
 
-        <div className="singleProduct-container">
-            <div className="singleProduct-left">
-                <div className="singleProduct-image">
-                    <img src={photo} alt=""/>
+            <div className="singleProduct-container">
+                <div className="singleProduct-left">
+                    <div className="singleProduct-image">
+                        <img src={photo} alt=""/>
+                    </div>
                 </div>
-            </div>
-            <div className="singleProduct-right">
-                <h1 className="singleProduct-title">{product.name}</h1>
-                <span className="singleProduct-price">${product.price}</span>
-                <p className="singleProduct-description">{product.description}</p>
-                <h3 className="singleProduct-choose-addon">Choose additional ingredient</h3>
-                <div className="singleProduct-addons">
-                    <select name="options" onChange={e => updateAddForm(e.target.value)}>
-                        <option value="">None</option>
+                <div className="singleProduct-right">
+                    <h1 className="singleProduct-title">{product.name}</h1>
+                    <span className="singleProduct-price">${product.price}</span>
+                    <p className="singleProduct-description">{product.description}</p>
+                    <h3 className="singleProduct-choose-addon">Choose additional ingredient</h3>
+                    <div className="singleProduct-addons">
+                        <select name="options" onChange={e => updateAddForm(e.target.value)}>
+                            <option value="">None</option>
+                            {
+                                options.map(option => <option key={option.id} value={option.id}>{option.name}:
+                                    ${option.price}</option>)
+                            }
+                        </select>
+                    </div>
+                    <div className="singleProduct-add">
+                        <h3>Total price: <span className="singleProduct-price">${price}</span></h3>
                         {
-                            options.map(option => <option key={option.id} value={option.id} >{option.name}: ${option.price}</option>)
+                            (cookie.access && cookie.access.user) &&
+                            <button onClick={addProductToBasket}>Add to Basket</button>
                         }
-                    </select>
-                </div>
-                <div className="singleProduct-add">
-                    <h3>Total price: <span className="singleProduct-price">${price}</span></h3>
-                    <button onClick={addProductToBasket}>Add to Basket</button>
+                    </div>
                 </div>
             </div>
-        </div>
     )
 
 
