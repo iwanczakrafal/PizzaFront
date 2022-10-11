@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import {useState, useEffect, useRef} from 'react';
 
 
 export enum HttpMethod {
@@ -18,7 +18,6 @@ const initOptions = {
 };
 
 
-
 export const useFetch = (url = '', value = initOptions) => {
     const cache = useRef<any>({});
     const [address, setAddress] = useState<string>(url);
@@ -28,6 +27,10 @@ export const useFetch = (url = '', value = initOptions) => {
     const fetchData = (url: string, value = initOptions) => {
         setAddress(url);
         setForm(value);
+    };
+
+    const clearCache = () => {
+        cache.current = {};
     };
 
     useEffect(() => {
@@ -45,7 +48,7 @@ export const useFetch = (url = '', value = initOptions) => {
                     credentials: 'include',
                     headers: form.headers,
                     body:
-                        (form.method === HttpMethod.GET || form.method === HttpMethod.DELETE) ? null : JSON.stringify(form.body),
+                        (form.method === (HttpMethod.GET || HttpMethod.DELETE)) ? null : JSON.stringify(form.body),
                 });
                 const data = await response.json();
                 cache.current[address] = data;
@@ -54,7 +57,7 @@ export const useFetch = (url = '', value = initOptions) => {
             }
         };
         fetchDataGet();
-    }, [address, form.method]);
-    return [data, status, fetchData, cache] as const;
+    }, [address, form.method, cache.current]);
+    return [data, status, fetchData, cache, clearCache] as const;
 };
 

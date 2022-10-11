@@ -1,6 +1,5 @@
 import React, {FormEvent, useState} from "react";
 import {HttpMethod, useFetch} from "../../utils/hooks/useFetch";
-import {useNavigate} from "react-router-dom";
 
 import "./RegisterForm.css";
 
@@ -14,7 +13,7 @@ export const RegisterForm = () => {
         email: '',
         password: '',
     });
-    const [created, setCreated] = useState(true)
+    const [created, setCreated] = useState(false)
     const updateRegisterForm = (key: string, value: any) => {
         setRegisterForm({
             ...registerForm,
