@@ -8,23 +8,20 @@ import {useFetch} from "../utils/hooks/useFetch";
 import {useCookies} from "react-cookie";
 
 
-
-
-
 export const HomeView = () => {
 
-    const [data,status,fetchData] = useFetch('http://localhost:3001/product')
+    const [data, status, fetchData] = useFetch('http://localhost:3001/product')
     const [cookie, setCookie] = useCookies(['access']);
 
 
     const dataToMap = status === 'fetched' ? data : null;
 
-useEffect(()=>{
-    cookie.access?
-        fetchData('http://localhost:3001/product/special')
-        :
-        fetchData('http://localhost:3001/product')
-},[cookie.access])
+    useEffect(() => {
+        cookie.access ?
+            fetchData('http://localhost:3001/product/special')
+            :
+            fetchData('http://localhost:3001/product')
+    }, [cookie.access])
 
     return (
         <>

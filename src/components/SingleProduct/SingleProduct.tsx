@@ -17,7 +17,7 @@ export const SingleProduct = () => {
 
     const [data, status, fetchData] = useFetch()
     const [optionsFetch, optionStatus] = useFetch("http://localhost:3001/option")
-    const [productFetch, productStatus] = useFetch((cookie.access && cookie.access.user) && specialId ? `http://localhost:3001/product/special/${specialId}` : `http://localhost:3001/product/${id}`)
+    const [productFetch, productStatus] = useFetch(cookie.access?.user && specialId ? `http://localhost:3001/product/special/${specialId}` : `http://localhost:3001/product/${id}`)
 
     useLayoutEffect(() => {
         window.scrollTo(0, 0)
@@ -39,7 +39,7 @@ export const SingleProduct = () => {
 
     const [price, setPrice] = useState(0)
 
-    const [photo, setPhoto] = useState(`http://localhost:3001/product/photo/${(cookie.access && cookie.access.user) && specialId ? specialId : id}`);
+    const [photo, setPhoto] = useState(`http://localhost:3001/product/photo/${cookie.access?.user && specialId ? specialId : id}`);
 
     const [addForm, setAddForm] = useState({
         productId: specialId ? specialId : id,
@@ -84,7 +84,7 @@ export const SingleProduct = () => {
     }, [optionsFetch, productFetch])
 
     return (
-        (!(cookie.access && cookie.access.user) && specialId) || !product
+        (!cookie.access?.user && specialId) || !product
 
             ?
             <CustomError message='Not found product'></CustomError>
@@ -114,7 +114,7 @@ export const SingleProduct = () => {
                     <div className="singleProduct-add">
                         <h3>Total price: <span className="singleProduct-price">${price}</span></h3>
                         {
-                            (cookie.access && cookie.access.user) &&
+                            cookie.access?.user &&
                             <button onClick={addProductToBasket}>Add to Basket</button>
                         }
                     </div>
