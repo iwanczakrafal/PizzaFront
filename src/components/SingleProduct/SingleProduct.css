@@ -73,10 +73,16 @@
         flex-direction: column;
         margin-top: 20px;
     }
+
+    .singleProduct-image {
+        padding-left: 25px;
+    }
+
     .singleProduct-image img {
         width: 70vw;
         height: 70vw;
     }
+
     .singleProduct-title {
         margin: 5px;
     }

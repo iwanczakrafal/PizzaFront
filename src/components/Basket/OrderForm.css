@@ -1,0 +1,107 @@
+.orderForm-container{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(245, 240, 240, 0.52);
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.orderForm-wrapper {
+    width: 600px;
+    background-color: white;
+    padding: 10px 50px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    border: 2px solid #d1411e;
+}
+
+.orderForm-closeBtn {
+    width: 30px;
+    height: 30px;
+    background-color: black;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+}
+
+.orderForm-item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+
+.orderForm label {
+    display: flex;
+}
+
+.orderForm input {
+    display: flex;
+    border: 2px solid gray;
+    border-radius: 5px;
+    outline: none;
+    padding: 16px;
+    margin-bottom: 12px;
+    background-color: white;
+}
+
+.orderForm input:focus{
+    border: 2px solid #d1411e;
+}
+
+.orderForm-payment {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 80px;
+    height: 80px;
+    border-radius: 5px;
+    box-shadow: 0 15px 50px 0 rgba(0,0,0,.15);
+}
+
+.orderForm-paymentSelected{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 80px;
+    height: 80px;
+    border-radius: 5px;
+    box-shadow: 0 15px 50px 0 rgba(0,0,0,.15);
+    color: white;
+    background-color: #d1411e;
+}
+
+.orderForm-payment p, .orderForm-paymentSelected p {
+    margin: 6px 0 6px 0;
+    font-size: 12px;
+}
+
+.orderForm-btn {
+    width: 25%;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: #d1411e;
+    color: white;
+    font-weight: 500;
+    font-size: 15px;
+    margin: 20px 0 20px 0;
+    cursor: pointer;
+    padding: 15px 0;
+}

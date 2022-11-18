@@ -70,16 +70,16 @@ export const LoginForm = () => {
 
 
     return (
-        <div className="LoginForm-container">
-            <div className="LoginForm-wrapper">
+        <div className="loginForm-container">
+            <div className="loginForm-wrapper">
                 <h1>SIGN IN</h1>
-                <form className="LoginForm" onSubmit={login}>
+                <form className="loginForm" onSubmit={login}>
                     <label>
                         <input
                             type="email"
                             name="email"
                             required
-                            placeholder="email"
+                            placeholder="E-mail"
                             value={form.email}
                             onChange={e => updateForm('email', e.target.value)}
                         />
@@ -89,16 +89,16 @@ export const LoginForm = () => {
                             type="password"
                             name="password"
                             required
-                            placeholder="password"
+                            placeholder="Password"
                             value={form.password}
                             onChange={e => updateForm('password', e.target.value)}
                         />
                     </label>
                     {
-                        errorMessage && <p className="LoginForm-error">{errorMessage}</p>
+                        errorMessage && <p className="loginForm-error">{errorMessage}</p>
                     }
                     <a href="/">Forgotten your password?</a>
-                    <button className="LoginForm-btn">LOGIN</button>
+                    <button className="loginForm-btn">LOGIN</button>
                     <a href="/register">Create account</a>
                 </form>
             </div>
