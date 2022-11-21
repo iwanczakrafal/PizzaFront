@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {PhoneEnabled} from "@material-ui/icons";
+import {Home, PhoneEnabled} from "@material-ui/icons";
 import {Link, useNavigate} from "react-router-dom";
 import {useFetch} from "../../utils/hooks/useFetch";
 import {useCookies} from "react-cookie";
@@ -29,7 +29,7 @@ export const Navbar = () => {
 
             <div className="navbar-left">
                 <div className="navbar-call">
-                    <PhoneEnabled style={{width: "32px", height: "32px", color: "white"}}/>
+                    <PhoneEnabled style={{width: "32px", height: "32px"}}/>
                 </div>
                 <div className="navbar-callInfo">
                     <div className="navbar-callTitle">ORDER NOW!</div>
@@ -39,6 +39,7 @@ export const Navbar = () => {
             <div className="navbar-center">
                 <Link to="/">
                     <h1 className="navbar-logo">BroPizza</h1>
+                    <div className="navbar-mobileHome"><Home style={{width: "40px", height: "40px"}}/></div>
                 </Link>
             </div>
             <div className="navbar-right">

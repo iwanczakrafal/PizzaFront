@@ -133,7 +133,7 @@ export const OrderForm = (props: Props) => {
                     <h2>Payment type</h2>
                     <div className="orderForm-item">
                         <label>
-                            <div className={payment ? "orderForm-paymentSelected" : "orderForm-payment"}
+                            <div className={payment ? "orderForm-payment , orderForm-paymentSelected" : "orderForm-payment"}
                                  onClick={() => {
                                      updateForm('paymentMethod', 'cash');
                                      setPayment(!payment)
@@ -145,7 +145,7 @@ export const OrderForm = (props: Props) => {
                             </div>
                         </label>
                         <label>
-                            <div className={payment ? "orderForm-payment" : "orderForm-paymentSelected"}
+                            <div className={payment ? "orderForm-payment" : "orderForm-payment , orderForm-paymentSelected"}
                                  onClick={() => {
                                      updateForm('paymentMethod', 'online');
                                      setPayment(!payment)

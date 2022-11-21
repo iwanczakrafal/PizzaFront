@@ -1,4 +1,4 @@
-.orderForm-container{
+.orderForm-container {
     width: 100vw;
     height: 100vh;
     background-color: rgba(245, 240, 240, 0.52);
@@ -58,7 +58,7 @@
     background-color: white;
 }
 
-.orderForm input:focus{
+.orderForm input:focus {
     border: 2px solid #d1411e;
 }
 
@@ -71,19 +71,10 @@
     width: 80px;
     height: 80px;
     border-radius: 5px;
-    box-shadow: 0 15px 50px 0 rgba(0,0,0,.15);
+    box-shadow: 0 15px 50px 0 rgba(0, 0, 0, .15);
 }
 
-.orderForm-paymentSelected{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    width: 80px;
-    height: 80px;
-    border-radius: 5px;
-    box-shadow: 0 15px 50px 0 rgba(0,0,0,.15);
+.orderForm-paymentSelected {
     color: white;
     background-color: #d1411e;
 }
@@ -94,6 +85,7 @@
 }
 
 .orderForm-btn {
+    display: block;
     width: 25%;
     border: 1px solid black;
     border-radius: 5px;
@@ -101,7 +93,36 @@
     color: white;
     font-weight: 500;
     font-size: 15px;
-    margin: 20px 0 20px 0;
+    margin: 25px auto;
     cursor: pointer;
     padding: 15px 0;
+}
+
+@media (max-width: 480px) {
+    .orderForm-container {
+        padding: 0 10px;
+    }
+
+    .orderForm-wrapper {
+        padding: 0 10px;
+    }
+
+    .orderForm-closeBtn {
+        top: -5px;
+    }
+
+    .orderForm label {
+        width: 45%;
+        justify-content: center;
+    }
+
+    .orderForm input {
+        width: 100%;
+    }
+
+    .orderForm-btn {
+        display: block;
+        width: 35%;
+        margin: 25px auto;
+    }
 }

@@ -28,15 +28,16 @@
 }
 
 
-.navbar-callInfo{
+.navbar-callInfo {
     margin-left: 20px;
 }
 
-.navbar-callTitle{
+.navbar-callTitle {
     font-size: 12px;
     font-weight: 500;
 }
-.navbar-callNumber{
+
+.navbar-callNumber {
     font-size: 20px;
     font-weight: bold;
 }
@@ -48,16 +49,20 @@
     justify-content: center;
 }
 
-.navbar-logo{
+.navbar-logo {
     font-family: 'Edu VIC WA NT Beginner', cursive;
     font-size: 40px;
+}
+
+.navbar-mobileHome {
+    display: none;
 }
 
 .navbar-right {
     display: flex;
     flex: 1;
     align-items: center;
-    justify-content:flex-end;
+    justify-content: flex-end;
 }
 
 .navbar-menuItem {
@@ -68,14 +73,33 @@
 
 @media (max-width: 480px) {
     .navbar-container {
-        padding: 0 20px;
+        padding: 0 10px;
     }
+
     .navbar-call {
         display: none;
     }
+
+    .navbar-left {
+        flex: 2;
+    }
+
+    .navbar-right {
+        flex: 2;
+    }
+
     .navbar-center {
+        flex: 1;
+    }
+
+    .navbar-logo {
         display: none;
     }
+
+    .navbar-mobileHome {
+        display: flex;
+    }
+
     .navbar-menuItem {
         font-size: 12px;
         margin-right: 10px;
