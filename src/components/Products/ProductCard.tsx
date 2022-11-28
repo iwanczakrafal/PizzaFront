@@ -19,7 +19,7 @@ export const ProductCard = (props: Props) => {
         <Link className="product-container" to={product.isSpecial ?`/product/special/${product.id}`:`/product/${product.id}`}>
             <img src={photo} alt=""/>
             <h1 className="product-title">{product.name}</h1>
-            <span className="product-price">$ {product.price}</span>
+            <span className="product-price">{product.price} PLN</span>
             <p className="product-description">{product.description}</p>
         </Link>
 

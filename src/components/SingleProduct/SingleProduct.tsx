@@ -99,7 +99,7 @@ export const SingleProduct = () => {
                 </div>
                 <div className="singleProduct-right">
                     <h1 className="singleProduct-title">{product.name}</h1>
-                    <span className="singleProduct-price">${product.price}</span>
+                    <span className="singleProduct-price">{product.price} PLN</span>
                     <p className="singleProduct-description">{product.description}</p>
                     <h3 className="singleProduct-choose-addon">Choose additional ingredient</h3>
                     <div className="singleProduct-addons">
@@ -107,12 +107,12 @@ export const SingleProduct = () => {
                             <option value="">None</option>
                             {
                                 options.map(option => <option key={option.id} value={option.id}>{option.name}:
-                                    ${option.price}</option>)
+                                    {option.price} PLN</option>)
                             }
                         </select>
                     </div>
                     <div className="singleProduct-add">
-                        <h3>Total price: <span className="singleProduct-price">${price}</span></h3>
+                        <h3>Total price: <span className="singleProduct-price">{price} PLN</span></h3>
                         {
                             cookie.access?.user &&
                             <button onClick={addProductToBasket}>Add to Basket</button>

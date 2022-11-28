@@ -48,7 +48,7 @@ export const SingleBasketProduct = (props: Props) => {
             </td>
             <td>
                 <span
-                    className="basket-price">${product.option ? product.productItem.price + product.option.price : product.productItem.price}</span>
+                    className="basket-price">{product.option ? product.productItem.price + product.option.price : product.productItem.price} PLN</span>
             </td>
         </tr>
     )

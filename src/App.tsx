@@ -5,6 +5,7 @@ import {Route, Routes} from "react-router-dom";
 import {BasketView} from './views/BasketView';
 import {LoginView} from "./views/LoginView";
 import {RegisterView} from "./views/RegisterView";
+import {OrderView} from "./views/OrderView";
 
 
 export const App = () => {
@@ -18,6 +19,7 @@ export const App = () => {
                 <Route path="/basket" element={<BasketView/>}/>
                 <Route path="/login" element={<LoginView/>}/>
                 <Route path="/register" element={<RegisterView/>}/>
+                <Route path="/order/:id" element={<OrderView/>}/>
             </Routes>
     );
 }

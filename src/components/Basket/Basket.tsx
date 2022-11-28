@@ -65,7 +65,7 @@ export const Basket = () => {
                         <div className="basket-wrapper">
                             <h2 className="basket-title">BASKET TOTAL</h2>
                             <div className="basket-totalText">
-                                <b className="basket-totalTextTitle">Total:</b>{totalPriceStatus === 'fetched' && `$${totalPrice}`}
+                                <b className="basket-totalTextTitle">Total:</b>{totalPriceStatus === 'fetched' && `${totalPrice} PLN`}
                             </div>
                             <button className="basket-button" onClick={() => setOrder(true)}>ORDER NOW!</button>
                         </div>

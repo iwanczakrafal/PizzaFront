@@ -1,0 +1,73 @@
+.order-container {
+    display: flex;
+    padding: 50px;
+    flex-direction: column;
+    text-align: center;
+}
+
+.order-wrapper {
+    margin-top: 100px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.order-statusImg {
+    width: 30px;
+    height: 30px;
+}
+
+.order-checked img {
+    width: 20px;
+    height: 20px;
+}
+
+.order-statusDone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.order-statusInProgress {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: inProgress 1s ease infinite alternate;
+}
+
+@keyframes inProgress {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.order-statusUndone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0.3;
+}
+
+.order-statusUndone .order-checked,
+.order-statusInProgress .order-checked {
+    display: none;
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 20px;
+    }
+
+    .order-wrapper {
+        margin: 10px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .order-statusDone, .order-statusInProgress, .order-statusUndone {
+        margin-bottom: 20px;
+    }
+}

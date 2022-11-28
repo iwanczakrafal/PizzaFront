@@ -157,7 +157,7 @@ export const OrderForm = (props: Props) => {
                             </div>
                         </label>
                     </div>
-                    <button className="orderForm-btn">Order and Pay</button>
+                    <button className="orderForm-btn">{form.paymentMethod === 'online' ? 'Order and Pay': 'Order' }</button>
                 </form>
             </div>
         </div>

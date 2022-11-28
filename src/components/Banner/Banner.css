@@ -1,20 +1,22 @@
-.banner-container{
-    width:100vw;
+.banner-container {
+    width: 100vw;
     height: 80vh;
     display: flex;
     align-items: center;
 
 }
-.banner-image{
+
+.banner-image {
     width: 100vw;
     flex: 1;
 }
-.banner-image img{
+
+.banner-image img {
     height: 50%;
 
 }
 
-.banner-info{
+.banner-info {
     margin-left: 70px;
     flex: 1;
     padding: 100px;
@@ -31,10 +33,36 @@
     font-weight: bold;
     letter-spacing: 3px;
 }
-.banner-info button{
+
+.banner-info button {
     padding: 10px;
     font-size: 20px;
     font-weight: bold;
     background-color: transparent;
     cursor: pointer;
+}
+
+@media (max-width: 480px) {
+    .banner-container {
+        height: 50vh;
+    }
+
+    .banner-image {
+        height: 100%;
+        padding-top: 50px;
+    }
+
+    .banner-info {
+        padding: 5px;
+        margin-left: 10px;
+    }
+
+    .banner-info h1 {
+        font-size: 18px;
+    }
+
+    .banner-info p {
+        font-size: 10px;
+        margin: 15px 0;
+    }
 }
